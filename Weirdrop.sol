@@ -78,4 +78,29 @@ contract Weirdrop {
         for (uint256 i = 0; i < length; i++)
             require(IERC20(weirdo).transfer(recipients[i], value));
     }
+    
+    /**
+    * @notice Distributes varying amounts of WEIRDO tokens to a list of addresses.
+    * @dev This function allows the sender to airdrop varying amounts of WEIRDO tokens
+    *      to multiple recipients in a single transaction. Unlike `weirdrop`, which distributes
+    *      a fixed amount to all recipients, this function handles varied amounts per recipient.
+    *      This is useful for custom distributions where each recipient may deserve a different
+    *      amount of tokens based on specific criteria or contributions.
+    *
+    *      The function utilizes `transferFrom` directly for each recipient, pulling the specified
+    *      amounts from the caller's balance to each recipient's address. The caller must have
+    *      approved the contract to handle their tokens and ensure sufficient balance to cover
+    *      the total sum of all specified amounts.
+    *
+    * @param recipients An array of addresses that will receive the tokens.
+    * @param amounts An array of token amounts that each address in the recipients array will receive.
+    *                There must be an equal number of recipients and amounts, and each index in the
+    *                recipients array corresponds to the index in the amounts array.
+    */
+    function variableWeirdrop(address[] calldata recipients, uint256[] calldata amounts) external {
+    uint256 length = recipients.length;
+        for (uint256 i = 0; i < length; i++) {
+        require(IERC20(weirdo).transferFrom(msg.sender, recipients[i], amounts[i]), "Transfer failed: Check balance and allowance");
+        }
+    }   
 }
