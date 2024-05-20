@@ -46,7 +46,7 @@ interface IERC20 {
 contract Weirdrop {
 
     // hardcoded address of weirdo, this helps saving gas on weirdrop calls
-    address public weirdo = 0xaA3ecAd0Cb644C0DE72110A905a57667C1a1cA96;
+    address public weirdo = 0x76734B57dFe834F102fB61E1eBF844Adf8DD931e;
 
     /**
      * @notice Distributes a specified amount of WEIRDO tokens to a list of addresses.
